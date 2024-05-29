@@ -1,7 +1,6 @@
+// src/Pages/home.js
 import React, { useState } from 'react';
-import ChatInput from '../Components/chatinput';
 import ChatOutput from '../Components/chatoutput';
-import { fetchResponse } from '../api'; // Importar la función desde api.js
 
 const Home = () => {
   const [input, setInput] = useState('');
@@ -14,9 +13,22 @@ const Home = () => {
     setMessages([...messages, userMessage]);
 
     try {
-      const response = await fetchResponse(input);
-      const botMessage = { text: response, sender: 'bot' };
-      setMessages(prevMessages => [...prevMessages, botMessage]);
+      const response = await fetch('http://127.0.0.1:5000/api/get_response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: input }),
+      });
+
+      const data = await response.json();
+      if (data.response) {
+        const botMessage = { text: data.response, sender: 'bot' };
+        setMessages(prevMessages => [...prevMessages, botMessage]);
+      } else {
+        const errorMessage = { text: 'Error fetching response', sender: 'bot' };
+        setMessages(prevMessages => [...prevMessages, errorMessage]);
+      }
     } catch (error) {
       const errorMessage = { text: 'Error fetching response', sender: 'bot' };
       setMessages(prevMessages => [...prevMessages, errorMessage]);

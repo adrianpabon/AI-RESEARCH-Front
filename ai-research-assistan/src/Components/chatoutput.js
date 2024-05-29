@@ -1,9 +1,13 @@
 import React from 'react';
 
-const ChatOutput = ({ message }) => (
-  <div className={`p-2 my-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-    <p className="text-sm">{message.text}</p>
-  </div>
-);
+const ChatOutput = ({ message }) => {
+  return (
+    <div className={`flex ${message.sender === 'bot' ? 'justify-start' : 'justify-end'} mb-4`}>
+      <div className={`p-2 rounded-lg shadow-sm ${message.sender === 'bot' ? 'bg-gray-200' : 'bg-blue-500 text-white'}`}>
+        {message.text}
+      </div>
+    </div>
+  );
+};
 
 export default ChatOutput;
