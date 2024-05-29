@@ -1,41 +1,48 @@
 import React, { useState } from 'react';
 import ChatInput from '../Components/chatinput';
 import ChatOutput from '../Components/chatoutput';
+import { fetchResponse } from '../api'; // Importar la función desde api.js
 
 const Home = () => {
+  const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const handleSend = (message) => {
-    setMessages([...messages, { text: message, sender: 'user' }]);
+  const handleSend = async () => {
+    if (input.trim() === '') return;
 
-    // Aquí deberías hacer una llamada a la API del LLM
-    const fetchResponse = async () => {
-      const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer YOUR_OPENAI_API_KEY`
-        },
-        body: JSON.stringify({
-          prompt: message,
-          max_tokens: 150,
-        })
-      });
+    const userMessage = { text: input, sender: 'user' };
+    setMessages([...messages, userMessage]);
 
-      const data = await response.json();
-      setMessages(prevMessages => [
-        ...prevMessages,
-        { text: data.choices[0].text, sender: 'bot' }
-      ]);
-    };
+    try {
+      const response = await fetchResponse(input);
+      const botMessage = { text: response, sender: 'bot' };
+      setMessages(prevMessages => [...prevMessages, botMessage]);
+    } catch (error) {
+      const errorMessage = { text: 'Error fetching response', sender: 'bot' };
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
+    }
 
-    fetchResponse();
+    setInput('');
   };
 
   return (
-    <div>
-      <ChatOutput messages={messages} />
-      <ChatInput onSend={handleSend} />
+    <div className="flex flex-col items-center p-4 min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold mb-4">Research Assistant</h1>
+      <div className="w-full flex justify-center mb-4">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          type="text"
+          placeholder="Search..."
+          className="w-11/12 md:w-1/2 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+        <button onClick={handleSend} className="bg-blue-500 text-white p-2 ml-2">Send</button>
+      </div>
+      <div className="w-full md:w-1/2">
+        {messages.map((msg, index) => (
+          <ChatOutput key={index} message={msg} />
+        ))}
+      </div>
     </div>
   );
 };

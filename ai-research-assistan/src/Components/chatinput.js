@@ -11,10 +11,11 @@ const ChatInput = ({ onSend }) => {
   return (
     <div className="flex p-4">
       <input 
-        type="text" 
         value={input} 
         onChange={(e) => setInput(e.target.value)} 
-        className="border p-2 flex-grow" 
+        type="text"
+        placeholder="Search..."
+        className="w-11/12 md:w-1/2 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       <button onClick={handleSend} className="bg-blue-500 text-white p-2 ml-2">Send</button>
     </div>

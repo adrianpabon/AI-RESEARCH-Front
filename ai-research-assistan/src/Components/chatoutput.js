@@ -1,15 +1,9 @@
 import React from 'react';
 
-const ChatOutput = ({ messages }) => {
-  return (
-    <div className="p-4">
-      {messages.map((msg, index) => (
-        <div key={index} className="border-b p-2">
-          {msg}
-        </div>
-      ))}
-    </div>
-  );
-};
+const ChatOutput = ({ message }) => (
+  <div className={`p-2 my-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+    <p className="text-sm">{message.text}</p>
+  </div>
+);
 
 export default ChatOutput;
