@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Routes, Switch, redirect, Navigate } from 'react-router-dom';
 import './App.css';
 import React from 'react';
 import Header from './Components/header';
@@ -6,23 +7,20 @@ import Home from './Pages/home';
 import Sidebar from './Components/sidebar';
 import ToggleButton from './Components/togglebutton';
 import { useState } from 'react';
+import Auth from './auth';
+import PrivateRoute from './rutaprivada';
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   return (
-    <div className="App">
-      <Header />
-      <Sidebar isOpen={isSidebarOpen} />
-      <ToggleButton toggleSidebar={toggleSidebar} />
-      <div className={`transition-margin duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
-        <Home />
-      </div>
-    </div>
+    <Router>
+    <Routes>
+      <Route path="login" element={<Auth />} />
+      <Route path="/app" element= {< Home/> } />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  </Router>
+
   );
 
 }
