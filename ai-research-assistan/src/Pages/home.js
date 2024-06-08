@@ -13,7 +13,7 @@ const Home = () => {
     setMessages([...messages, userMessage]);
 
     try {
-      const response = await fetch('http://127.0.0.1:6000/api/get_response', {
+      const response = await fetch('http://18.223.124.98:6000/api/get_response', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
