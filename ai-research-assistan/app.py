@@ -10,7 +10,7 @@ load_dotenv()
 
 # Verify API key
 api_key = os.getenv('OPENAI_API_KEY')
-print(f"API Key: {api_key}")  # Verify if API key is loading
+#print(f"API Key: {api_key}")  # Verify if API key is loading
 
 if not api_key:
     raise ValueError("No API key found in environment variables")
