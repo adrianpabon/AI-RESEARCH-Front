@@ -40,9 +40,5 @@ def get_response():
         print(f"Error: {e}")  # Debug logging
         return jsonify({"error": str(e)}), 500
     
-
-context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-context.load_cert_chain('server.crt', 'server.key')
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True, ssl_context=context)
+    app.run(host='0.0.0.0', port=5001, debug=True)

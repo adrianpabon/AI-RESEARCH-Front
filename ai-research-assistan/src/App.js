@@ -10,15 +10,19 @@ import { useState } from 'react';
 import Auth from './auth';
 import PrivateRoute from './rutaprivada';
 
+
 function App() {
 
   return (
+
     <Router>
+      <Header />
     <Routes>
       <Route path="login" element={<Auth />} />
       <Route path="/app" element= {< Home/> } />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
+    
   </Router>
 
   );
