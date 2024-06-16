@@ -19,7 +19,7 @@ function App() {
       <Header />
     <Routes>
       <Route path="login" element={<Auth />} />
-      <Route path="/app" element= {< Home/> } />
+      // <Route path="/app" element= {< Home/> } />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
     
