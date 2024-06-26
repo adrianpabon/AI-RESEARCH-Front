@@ -4,11 +4,11 @@ import './App.css';
 import React from 'react';
 import Header from './Components/header';
 import Home from './Pages/home';
-import Sidebar from './Components/sidebar';
-import ToggleButton from './Components/togglebutton';
 import { useState } from 'react';
 import Auth from './auth';
 import PrivateRoute from './rutaprivada';
+import Profile from './Pages/profile';
+import Signout from './Pages/signout';
 
 
 function App() {
@@ -16,11 +16,13 @@ function App() {
   return (
 
     <Router>
-      <Header />
     <Routes>
-      <Route path="login" element={<Auth />} />
-      // <Route path="/app" element= {< Home/> } />
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<Auth />} />
+      <Route path="/app" element= {< Home/> } />
+      <Route path="profile" element= {<Profile/> } />
+      <Route path="signout" element= {<Signout/> } />
+
+      
     </Routes>
     
   </Router>
