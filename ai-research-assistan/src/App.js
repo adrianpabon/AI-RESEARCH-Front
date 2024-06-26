@@ -21,6 +21,7 @@ function App() {
       <Route path="/app" element= {< Home/> } />
       <Route path="profile" element= {<Profile/> } />
       <Route path="signout" element= {<Signout/> } />
+      <Route path="*" element={<Navigate to="/app" />} />
 
       
     </Routes>
